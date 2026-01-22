@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey, String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
-from app.database.base import Base
+from backend.app.database.base import Base
 
 class Automation(Base):
     __tablename__ = "automations"
