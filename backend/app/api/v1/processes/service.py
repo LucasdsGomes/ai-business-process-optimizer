@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from backend.app.api.v1.processes.schemas import ProcessCreate
 from backend.app.database.repositories.process_repository import ProcessRepository
 from backend.app.clients.llm_client import LLMClient
+from backend.app.models.process import Process
 
 
 class ProcessService:
@@ -15,14 +16,28 @@ class ProcessService:
         return ProcessRepository.get_all(db)
 
     @staticmethod
-    def analyze_process(db: Session, process_id: int):
-        process = ProcessRepository.get_by_id(db, process_id)
+    def analyze_process(db, process_id: int):
+        process = db.query(Process).filter(Process.id == process_id).first()
 
         if not process:
             return None
 
+        if process.status == "ANALYZED":
+            return process.analysis_result
+
+        process.status = "ANALYZING"
+        db.commit()
+
         llm = LLMClient()
-        return llm.analyze_process(
+        analysis = llm.analyze_process(
             name=process.name,
-            description=process.description or ""
+            description=process.description
         )
+
+        process.analysis_result = analysis
+        process.status = "ANALYZED"
+
+        db.commit()
+        db.refresh(process)
+
+        return analysis
