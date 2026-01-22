@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.v1.router import api_router
+from backend.app.api.v1.router import api_router
 
 # USO DE HEALTH CHECKS NO PROJETO
 
