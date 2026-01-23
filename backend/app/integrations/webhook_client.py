@@ -1,22 +1,37 @@
 import os
 import requests
 from dotenv import load_dotenv
+
 load_dotenv()
+
 
 class WebhookClient:
     def __init__(self):
-        self.url = os.getenv("AUTOMATION_WEBHOOK_URL")
-        print(f"Webhook URL: {self.url}")
+        self.process_analyzed_url = os.getenv(
+            "N8N_PROCESS_ANALYZED_WEBHOOK_URL"
+        )
+        self.process_created_url = os.getenv(
+            "N8N_PROCESS_CREATED_WEBHOOK_URL"
+        )
 
-        if not self.url:
-            raise RuntimeError("AUTOMATION_WEBHOOK_URL não definida")
+        if not self.process_analyzed_url:
+            raise ValueError("N8N_PROCESS_ANALYZED_WEBHOOK_URL not configured")
 
-    def send(self, payload: dict):
+        if not self.process_created_url:
+            raise ValueError("N8N_PROCESS_CREATED_WEBHOOK_URL not configured")
+
+    def send_process_analysis(self, payload: dict) -> None:
         response = requests.post(
-            self.url,
+            self.process_analyzed_url,
             json=payload,
             timeout=10
         )
-
         response.raise_for_status()
-        return response
+
+    def send_process_created(self, payload: dict) -> None:
+        response = requests.post(
+            self.process_created_url,
+            json=payload,
+            timeout=10
+        )
+        response.raise_for_status()

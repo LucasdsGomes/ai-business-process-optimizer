@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from backend.app.api.v1.processes.schemas import ProcessCreate
 from backend.app.database.repositories.process_repository import ProcessRepository
 from backend.app.clients.llm_client import LLMClient
+from backend.app.integrations.webhook_client import WebhookClient
 from backend.app.models.process import Process
 
 
@@ -9,14 +10,26 @@ class ProcessService:
 
     @staticmethod
     def create_process(db: Session, data: ProcessCreate):
-        return ProcessRepository.create(db, data)
+        process = ProcessRepository.create(db, data)
+        webhook = WebhookClient()
+        webhook.send_process_created({
+            "event": "process_created",
+            "process_id": process.id,
+            "name": process.name,
+            "description": process.description,
+            "status": process.status
+        })
+
+
+        return process
+        
 
     @staticmethod
     def list_processes(db: Session):
         return ProcessRepository.get_all(db)
 
     @staticmethod
-    def analyze_process(db, process_id: int):
+    def analyze_process(db: Session, process_id: int):
         process = db.query(Process).filter(Process.id == process_id).first()
 
         if not process:
@@ -39,5 +52,17 @@ class ProcessService:
 
         db.commit()
         db.refresh(process)
+
+        # 🔥 AQUI entra o webhook
+        webhook = WebhookClient()
+        webhook.send_process_analysis({
+            "event": "process_analyzed",
+            "process_id": process.id,
+            "name": process.name,
+            "description": process.description,
+            "analysis": process.analysis_result,
+            "status": process.status
+        })
+
 
         return analysis
