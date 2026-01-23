@@ -160,8 +160,7 @@ Se quiser trocar ideia sobre IA, automação ou dados, fica à vontade para abri
 **Lucas de Souza Gomes**
 Back-End Developer & Analista de Dados
 
-* LinkedIn: *(adicione aqui)*
-* GitHub: *(adicione aqui)*
+* LinkedIn: https://www.linkedin.com/in/lucasdsgomes/
 
 ---
 
