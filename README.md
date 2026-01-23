@@ -10,6 +10,15 @@ Nada de projeto de tutorial. Este repositório representa **estudo aplicado**, c
 
 <img width="1024" height="687" alt="image" src="https://github.com/user-attachments/assets/323c3780-bb5b-4a81-8792-6197cf834a32" />
 
+** Ativação do N8N para intermédio de API e Notion **
+<img width="737" height="627" alt="image" src="https://github.com/user-attachments/assets/04f6d8d7-54d0-4a9f-950d-ba9c8a75c7b0" />
+** Registro dos processos solicitados e pendentes via API/Swagger - Python **
+<img width="1523" height="273" alt="image" src="https://github.com/user-attachments/assets/0dc35841-7d8c-46c3-a5c4-2451e7e560b7" />
+
+** Visualização de dados via Streamlit com Dashboard - PowerBI (Análise de Dados) **
+
+https://github.com/user-attachments/assets/ef782ee1-12eb-489a-9e76-5ceb83a63977
+
 ---
 
 ## 🧠 Visão Geral do Fluxo
