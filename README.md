@@ -64,6 +64,7 @@ Usuário / Sistema
 * **FastAPI**
 * **n8n**
 * **PostgreSQL**
+* **Docker**
 
 ### IA
 
@@ -125,6 +126,9 @@ uvicorn app.main:app --reload
 
 # Streamlit
 streamlit run dashboard.py
+
+# Docker
+docker-compose up
 ```
 
 > ⚠️ É necessário configurar variáveis de ambiente para:
